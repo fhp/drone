@@ -262,7 +262,10 @@ ORDER BY stage_id ASC
 `
 
 const queryUnfinished = queryBase + `
+JOIN builds
+	ON stages.stage_build_id = builds.build_id
 WHERE stage_status IN ('pending','running')
+	AND build_status <> 'killed'
 ORDER BY stage_id ASC
 `
 
