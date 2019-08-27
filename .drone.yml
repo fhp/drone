@@ -8,22 +8,17 @@ platform:
 
 steps:
 - name: test
-  image: golang:1.11
+  image: golang:1.12.9
   commands:
-  - go test -v ./...
-  volumes:
-  - name: gopath
-    path: /go
+  - go test ./...
 
 - name: build
-  image: golang:1.11
+  image: golang:1.12.9
   commands:
-  - "go build -ldflags \"-extldflags \\\\\"-static\\\\\"\" -o release/linux/amd64/drone-server github.com/drone/drone/cmd/drone-server"
-  - CGO_ENABLED=0 go build -o release/linux/amd64/drone-agent github.com/drone/drone/cmd/drone-agent
-  - CGO_ENABLED=0 go build -o release/linux/amd64/drone-controller github.com/drone/drone/cmd/drone-controller
-  volumes:
-  - name: gopath
-    path: /go
+    - sh scripts/build.sh
+  environment:
+    GOARCH: amd64
+    GOOS: linux
   when:
     event:
     - push
@@ -46,10 +41,7 @@ steps:
       from_secret: docker_username
   when:
     event:
-    - push
-    - pull_request
-    - tag
+      - push
+      - pull_request
+      - tag
 
-volumes:
-- name: gopath
-  temp: {}

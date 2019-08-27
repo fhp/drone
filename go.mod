@@ -3,6 +3,7 @@ module github.com/drone/drone
 require (
 	docker.io/go-docker v1.0.0
 	github.com/99designs/httpsignatures-go v0.0.0-20170731043157-88528bf4ca7e
+	github.com/Azure/azure-storage-blob-go v0.7.0
 	github.com/Microsoft/go-winio v0.4.11
 	github.com/asaskevich/govalidator v0.0.0-20180315120708-ccb8e960c48f
 	github.com/aws/aws-sdk-go v1.15.57
@@ -16,14 +17,14 @@ require (
 	github.com/docker/distribution v2.7.1+incompatible
 	github.com/docker/go-connections v0.3.0
 	github.com/docker/go-units v0.3.3
-	github.com/drone/drone-go v1.0.5-0.20190427184118-618e4496482e
-	github.com/drone/drone-runtime v1.0.6
-	github.com/drone/drone-ui v0.0.0-20190530175131-92ba3df1e0a9
-	github.com/drone/drone-yaml v1.2.2-0.20190719012529-c50000a465ee
+	github.com/drone/drone-go v1.0.5
+	github.com/drone/drone-runtime v1.1.0
+	github.com/drone/drone-ui v0.0.0-20190826173727-43d81f243ef3
+	github.com/drone/drone-yaml v1.2.3-0.20190807054305-a4a63fe917cb
 	github.com/drone/envsubst v1.0.1
 	github.com/drone/go-license v1.0.2
 	github.com/drone/go-login v1.0.4-0.20190311170324-2a4df4f242a2
-	github.com/drone/go-scm v1.5.1-0.20190718235211-75d6480d5332
+	github.com/drone/go-scm v1.5.1-0.20190826160521-fda52b1e0829
 	github.com/drone/signal v1.0.0
 	github.com/dustin/go-humanize v1.0.0
 	github.com/ghodss/yaml v1.0.0
@@ -35,7 +36,7 @@ require (
 	github.com/golang/mock v1.1.1
 	github.com/golang/protobuf v1.2.0
 	github.com/google/btree v0.0.0-20180813153112-4030bb1f1f0c
-	github.com/google/go-cmp v0.2.0
+	github.com/google/go-cmp v0.3.0
 	github.com/google/go-jsonnet v0.12.1
 	github.com/google/gofuzz v0.0.0-20170612174753-24818f796faf
 	github.com/google/wire v0.2.1
@@ -43,12 +44,12 @@ require (
 	github.com/gorhill/cronexpr v0.0.0-20140423231348-a557574d6c02
 	github.com/gosimple/slug v1.3.0
 	github.com/gregjones/httpcache v0.0.0-20181110185634-c63ab54fda8f
-	github.com/h2non/gock v1.0.10
+	github.com/h2non/gock v1.0.15
 	github.com/hashicorp/errwrap v1.0.0
 	github.com/hashicorp/go-cleanhttp v0.5.0
 	github.com/hashicorp/go-multierror v1.0.0
 	github.com/hashicorp/go-retryablehttp v0.0.0-20180718195005-e651d75abec6
-	github.com/hashicorp/go-rootcerts v1.0.0
+	github.com/hashicorp/go-rootcerts v1.0.1 // indirect
 	github.com/hashicorp/golang-lru v0.5.0
 	github.com/hashicorp/nomad v0.0.0-20190125003214-134391155854
 	github.com/imdario/mergo v0.3.6
@@ -61,7 +62,7 @@ require (
 	github.com/lib/pq v1.0.0
 	github.com/mattn/go-sqlite3 v1.9.0
 	github.com/matttproud/golang_protobuf_extensions v1.0.1
-	github.com/mitchellh/go-homedir v1.0.0
+	github.com/mitchellh/go-homedir v1.1.0
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
 	github.com/modern-go/reflect2 v0.0.0-20180701023420-4b7aa43c6742
 	github.com/natessilva/dag v0.0.0-20180124060714-7194b8dcc5c4
@@ -97,3 +98,5 @@ require (
 	k8s.io/klog v0.1.0
 	sigs.k8s.io/yaml v1.1.0
 )
+
+replace github.com/h2non/gock => gopkg.in/h2non/gock.v1 v1.0.14

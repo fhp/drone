@@ -181,6 +181,7 @@ func (t *triggerer) Trigger(ctx context.Context, repo *core.Repository, base *co
 			Params:       base.Params,
 			Cron:         base.Cron,
 			Deploy:       base.Deployment,
+			DeployID:     base.DeploymentID,
 			Sender:       base.Sender,
 			Created:      time.Now().Unix(),
 			Updated:      time.Now().Unix(),
@@ -259,6 +260,9 @@ func (t *triggerer) Trigger(ctx context.Context, repo *core.Repository, base *co
 		} else if skipEvent(pipeline, base.Event) {
 			logger = logger.WithField("pipeline", pipeline.Name)
 			logger.Infoln("trigger: skipping pipeline, does not match event")
+		} else if skipAction(pipeline, base.Action) {
+			logger = logger.WithField("pipeline", pipeline.Name).WithField("action", base.Action)
+			logger.Infoln("trigger: skipping pipeline, does not match action")
 		} else if skipRef(pipeline, base.Ref) {
 			logger = logger.WithField("pipeline", pipeline.Name)
 			logger.Infoln("trigger: skipping pipeline, does not match ref")
@@ -317,6 +321,7 @@ func (t *triggerer) Trigger(ctx context.Context, repo *core.Repository, base *co
 		AuthorAvatar: base.AuthorAvatar,
 		Params:       base.Params,
 		Deploy:       base.Deployment,
+		DeployID:     base.DeploymentID,
 		Sender:       base.Sender,
 		Created:      time.Now().Unix(),
 		Updated:      time.Now().Unix(),
@@ -483,6 +488,7 @@ func (t *triggerer) createBuildError(ctx context.Context, repo *core.Repository,
 		AuthorEmail:  base.AuthorEmail,
 		AuthorAvatar: base.AuthorAvatar,
 		Deploy:       base.Deployment,
+		DeployID:     base.DeploymentID,
 		Sender:       base.Sender,
 		Created:      time.Now().Unix(),
 		Updated:      time.Now().Unix(),
