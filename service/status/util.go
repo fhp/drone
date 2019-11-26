@@ -30,6 +30,8 @@ func createLabel(name, event string) string {
 		return fmt.Sprintf("%s/push", name)
 	case core.EventPullRequest:
 		return fmt.Sprintf("%s/pr", name)
+	case core.EventClosePullRequest:
+		return fmt.Sprintf("%s/close-pr", name)
 	case core.EventTag:
 		return fmt.Sprintf("%s/tag", name)
 	default:

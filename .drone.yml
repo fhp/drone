@@ -31,7 +31,7 @@ steps:
   settings:
     dockerfile: docker/Dockerfile.server.linux.amd64
     registry: eu.gcr.io
-    repo: eu.gcr.io/unicorn-985/drone
+    repo: eu.gcr.io/unicorn-985/drone-server
     tags:
       - "${DRONE_COMMIT}"
   environment:
@@ -45,3 +45,22 @@ steps:
       - pull_request
       - tag
 
+- name: publish-agent
+  pull: default
+  image: plugins/docker
+  settings:
+    dockerfile: docker/Dockerfile.agent.linux.amd64
+    registry: eu.gcr.io
+    repo: eu.gcr.io/unicorn-985/drone-agent
+    tags:
+      - "${DRONE_COMMIT}"
+  environment:
+    DOCKER_PASSWORD:
+      from_secret: docker_password
+    DOCKER_USERNAME:
+      from_secret: docker_username
+  when:
+    event:
+      - push
+      - pull_request
+      - tag

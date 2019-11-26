@@ -303,14 +303,14 @@ func (m *Manager) Details(ctx context.Context, id int64) (*Context, error) {
 	// unit tests.
 	for _, secret := range tmpSecrets {
 		if secret.PullRequest == false &&
-			build.Event == core.EventPullRequest {
+			(build.Event == core.EventPullRequest || build.Event == core.EventClosePullRequest) {
 			continue
 		}
 		secrets = append(secrets, secret)
 	}
 	for _, secret := range tmpGlobalSecrets {
 		if secret.PullRequest == false &&
-			build.Event == core.EventPullRequest {
+			(build.Event == core.EventPullRequest || build.Event == core.EventClosePullRequest) {
 			continue
 		}
 		secrets = append(secrets, secret)

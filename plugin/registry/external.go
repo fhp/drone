@@ -89,7 +89,7 @@ func (c *externalController) List(ctx context.Context, in *core.RegistryArgs) ([
 		// events. If the secret is restricted, return
 		// empty results.
 		if (res.Pull == false && res.PullRequest == false) &&
-			in.Build.Event == core.EventPullRequest {
+			(in.Build.Event == core.EventPullRequest || in.Build.Event == core.EventClosePullRequest) {
 			logger.WithError(err).Trace("image_pull_secrets: pull_request access denied")
 			return nil, nil
 		}
