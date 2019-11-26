@@ -51,7 +51,7 @@ steps:
   settings:
     dockerfile: docker/Dockerfile.agent.linux.amd64
     registry: eu.gcr.io
-    repo: eu.gcr.io/unicorn-985/drone-agent
+    repo: eu.gcr.io/gynzy-test-project/drone-agent
     tags:
       - "${DRONE_COMMIT}"
   environment:
