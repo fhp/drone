@@ -50,6 +50,7 @@ type (
 		Authn        Authentication
 		Agent        Agent
 		AzureBlob    AzureBlob
+		Convert      Convert
 		Cron         Cron
 		Cloning      Cloning
 		Database     Database
@@ -73,6 +74,7 @@ type (
 		Session      Session
 		Status       Status
 		Users        Users
+		Validate     Validate
 		Webhook      Webhook
 		Yaml         Yaml
 
@@ -105,6 +107,9 @@ type (
 		Driver     string `envconfig:"DRONE_DATABASE_DRIVER"     default:"sqlite3"`
 		Datasource string `envconfig:"DRONE_DATABASE_DATASOURCE" default:"core.sqlite"`
 		Secret     string `envconfig:"DRONE_DATABASE_SECRET"`
+
+		// Feature flag
+		LegacyBatch bool `envconfig:"DRONE_DATABASE_LEGACY_BATCH"`
 	}
 
 	// Docker provides docker configuration
@@ -171,7 +176,9 @@ type (
 
 	// Repository provides the repository configuration.
 	Repository struct {
-		Filter []string `envconfig:"DRONE_REPOSITORY_FILTER"`
+		Filter     []string `envconfig:"DRONE_REPOSITORY_FILTER"`
+		Visibility string   `envconfig:"DRONE_REPOSITORY_VISIBILITY"`
+		Trusted    bool     `envconfig:"DRONE_REPOSITORY_TRUSTED"`
 	}
 
 	// Registries provides the registry configuration.
@@ -199,7 +206,7 @@ type (
 	}
 
 	Agent struct {
-		Enabled bool `envconfig:"DRONE_AGENTS_ENABLED"`
+		Disabled bool `envconfig:"DRONE_AGENTS_DISABLED"`
 	}
 
 	// Runner provides the runner configuration.
@@ -236,6 +243,7 @@ type (
 		Port  string `envconfig:"DRONE_SERVER_PORT" default:":8080"`
 		Proto string `envconfig:"DRONE_SERVER_PROTO" default:"http"`
 		Acme  bool   `envconfig:"DRONE_TLS_AUTOCERT"`
+		Email string `envconfig:"DRONE_TLS_EMAIL"`
 		Cert  string `envconfig:"DRONE_TLS_CERT"`
 		Key   string `envconfig:"DRONE_TLS_KEY"`
 	}
@@ -254,9 +262,9 @@ type (
 
 	// Authentication Controller configuration
 	Authentication struct {
-		Endpoint   string `envconfig:"DRONE_AUTHENTICATION_ENDPOINT"`
-		Token      string `envconfig:"DRONE_AUTHENTICATION_TOKEN"`
-		SkipVerify bool   `envconfig:"DRONE_AUTHENTICATION_SKIP_VERIFY"`
+		Endpoint   string `envconfig:"DRONE_ADMISSION_PLUGIN_ENDPOINT"`
+		Secret     string `envconfig:"DRONE_ADMISSION_PLUGIN_SECRET"`
+		SkipVerify bool   `envconfig:"DRONE_ADMISSION_PLUGIN_SKIP_VERIFY"`
 	}
 
 	// Session provides the session configuration.
@@ -293,6 +301,21 @@ type (
 		Endpoint   string `envconfig:"DRONE_YAML_ENDPOINT"`
 		Secret     string `envconfig:"DRONE_YAML_SECRET"`
 		SkipVerify bool   `envconfig:"DRONE_YAML_SKIP_VERIFY"`
+	}
+
+	// Convert provides the converter webhook configuration.
+	Convert struct {
+		Extension  string `envconfig:"DRONE_CONVERT_PLUGIN_EXTENSION"`
+		Endpoint   string `envconfig:"DRONE_CONVERT_PLUGIN_ENDPOINT"`
+		Secret     string `envconfig:"DRONE_CONVERT_PLUGIN_SECRET"`
+		SkipVerify bool   `envconfig:"DRONE_CONVERT_PLUGIN_SKIP_VERIFY"`
+	}
+
+	// Validate provides the validation webhook configuration.
+	Validate struct {
+		Endpoint   string `envconfig:"DRONE_VALIDATE_PLUGIN_ENDPOINT"`
+		Secret     string `envconfig:"DRONE_VALIDATE_PLUGIN_SECRET"`
+		SkipVerify bool   `envconfig:"DRONE_VALIDATE_PLUGIN_SKIP_VERIFY"`
 	}
 
 	//

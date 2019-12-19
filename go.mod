@@ -17,14 +17,14 @@ require (
 	github.com/docker/distribution v2.7.1+incompatible
 	github.com/docker/go-connections v0.3.0
 	github.com/docker/go-units v0.3.3
-	github.com/drone/drone-go v1.0.5
+	github.com/drone/drone-go v1.0.6
 	github.com/drone/drone-runtime v1.1.0
-	github.com/drone/drone-ui v0.0.0-20190826173727-43d81f243ef3
-	github.com/drone/drone-yaml v1.2.3-0.20190807054305-a4a63fe917cb
+	github.com/drone/drone-ui v0.0.0-20191004020100-87de5a7c28a9
+	github.com/drone/drone-yaml v1.2.3-0.20191031071139-9036725284d3
 	github.com/drone/envsubst v1.0.1
 	github.com/drone/go-license v1.0.2
 	github.com/drone/go-login v1.0.4-0.20190311170324-2a4df4f242a2
-	github.com/drone/go-scm v1.5.1-0.20190826160521-fda52b1e0829
+	github.com/drone/go-scm v1.6.1-0.20190930172114-d8fff5ce7761
 	github.com/drone/signal v1.0.0
 	github.com/dustin/go-humanize v1.0.0
 	github.com/ghodss/yaml v1.0.0
@@ -33,7 +33,7 @@ require (
 	github.com/go-ini/ini v1.39.0
 	github.com/go-sql-driver/mysql v1.4.0
 	github.com/gogo/protobuf v0.0.0-20170307180453-100ba4e88506
-	github.com/golang/mock v1.1.1
+	github.com/golang/mock v1.3.1
 	github.com/golang/protobuf v1.2.0
 	github.com/google/btree v0.0.0-20180813153112-4030bb1f1f0c
 	github.com/google/go-cmp v0.3.0
@@ -82,11 +82,11 @@ require (
 	github.com/sirupsen/logrus v0.0.0-20181103062819-44067abb194b
 	github.com/spf13/pflag v1.0.3
 	github.com/unrolled/secure v0.0.0-20181022170031-4b6b7cf51606
-	golang.org/x/crypto v0.0.0-20181203042331-505ab145d0a9
-	golang.org/x/net v0.0.0-20181011144130-49bb7cea24b1
+	golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550
+	golang.org/x/net v0.0.0-20190404232315-eb5bcb51f2a3
 	golang.org/x/oauth2 v0.0.0-20181203162652-d668ce993890
-	golang.org/x/sync v0.0.0-20180314180146-1d60e4601c6f
-	golang.org/x/sys v0.0.0-20181011152604-fa43e7bc11ba
+	golang.org/x/sync v0.0.0-20190423024810-112230192c58
+	golang.org/x/sys v0.0.0-20190412213103-97732733099d
 	golang.org/x/text v0.3.0
 	golang.org/x/time v0.0.0-20181108054448-85acf8d2951c
 	google.golang.org/appengine v1.3.0

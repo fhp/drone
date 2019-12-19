@@ -92,22 +92,14 @@ func provideGiteaLogin(config config.Config) login.Middleware {
 	if config.Gitea.Server == "" {
 		return nil
 	}
-	if config.Gitea.ClientID != "" {
-		return &gitea.Config {
-			ClientID:     config.Gitea.ClientID,
-			ClientSecret: config.Gitea.ClientSecret,
-			Server:       config.Gitea.Server,
-			Client:       defaultClient(config.Gitea.SkipVerify),
-			Logger:       logrus.StandardLogger(),
-			RedirectURL:  config.Server.Addr + "/login",
-			Scope:        config.Gitea.Scope,
-		}
-	}
-	return &gogs.Config{
-		Label:  "drone",
-		Login:  "/login/form",
-		Server: config.Gitea.Server,
-		Client: defaultClient(config.Gitea.SkipVerify),
+	return &gitea.Config {
+		ClientID:     config.Gitea.ClientID,
+		ClientSecret: config.Gitea.ClientSecret,
+		Server:       config.Gitea.Server,
+		Client:       defaultClient(config.Gitea.SkipVerify),
+		Logger:       logrus.StandardLogger(),
+		RedirectURL:  config.Server.Addr + "/login",
+		Scope:        config.Gitea.Scope,
 	}
 }
 
@@ -171,6 +163,7 @@ func provideRefresher(config config.Config) *oauth2.Refresher {
 			ClientSecret: config.Bitbucket.ClientSecret,
 			Endpoint:     "https://bitbucket.org/site/oauth2/access_token",
 			Source:       oauth2.ContextTokenSource(),
+			Client:       defaultClient(config.Bitbucket.SkipVerify),
 		}
 	case config.Gitea.ClientID != "":
 		return &oauth2.Refresher{
@@ -178,6 +171,7 @@ func provideRefresher(config config.Config) *oauth2.Refresher {
 			ClientSecret: config.Gitea.ClientSecret,
 			Endpoint:     config.Gitea.Server + "/login/oauth/access_token",
 			Source:       oauth2.ContextTokenSource(),
+			Client:       defaultClient(config.Gitea.SkipVerify),
 		}
 	}
 	return nil

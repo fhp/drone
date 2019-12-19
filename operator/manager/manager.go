@@ -20,6 +20,7 @@ import (
 	"io"
 	"time"
 
+	"github.com/drone/drone-yaml/yaml/converter"
 	"github.com/drone/drone/core"
 	"github.com/drone/drone/store/shared/db"
 
@@ -101,6 +102,7 @@ type (
 func New(
 	builds core.BuildStore,
 	config core.ConfigService,
+	converter core.ConvertService,
 	events core.Pubsub,
 	logs core.LogStore,
 	logz core.LogStream,
@@ -119,6 +121,7 @@ func New(
 	return &Manager{
 		Builds:    builds,
 		Config:    config,
+		Converter: converter,
 		Events:    events,
 		Globals:   globals,
 		Logs:      logs,
@@ -141,6 +144,7 @@ func New(
 type Manager struct {
 	Builds    core.BuildStore
 	Config    core.ConfigService
+	Converter core.ConvertService
 	Events    core.Pubsub
 	Globals   core.GlobalSecretStore
 	Logs      core.LogStore
@@ -283,6 +287,26 @@ func (m *Manager) Details(ctx context.Context, id int64) (*Context, error) {
 	if err != nil {
 		logger = logger.WithError(err)
 		logger.Warnln("manager: cannot find configuration")
+		return nil, err
+	}
+
+	// this code is temporarily in place to detect and convert
+	// the legacy yaml configuration file to the new format.
+	config.Data, _ = converter.ConvertString(config.Data, converter.Metadata{
+		Filename: repo.Config,
+		URL:      repo.Link,
+		Ref:      build.Ref,
+	})
+
+	config, err = m.Converter.Convert(noContext, &core.ConvertArgs{
+		Build:  build,
+		Config: config,
+		Repo:   repo,
+		User:   user,
+	})
+	if err != nil {
+		logger = logger.WithError(err)
+		logger.Warnln("manager: cannot convert configuration")
 		return nil, err
 	}
 	var secrets []*core.Secret
@@ -456,7 +480,7 @@ func (m *Manager) Watch(ctx context.Context, id int64) (bool, error) {
 	// the database to see if the stage is complete. If
 	// complete, return true.
 	stage, err := m.Stages.Find(ctx, id)
-	if err == nil {
+	if err != nil {
 		logger := logrus.WithError(err)
 		logger = logger.WithField("step-id", id)
 		logger.Warnln("manager: cannot find stage")
