@@ -98,7 +98,7 @@ func (t *triggerer) Trigger(ctx context.Context, repo *core.Repository, base *co
 		logger.Infoln("trigger: skipping hook. found skip directive")
 		return nil, nil
 	}
-	if base.Event == core.EventPullRequest {
+	if base.Event == core.EventPullRequest || base.Event == core.EventClosePullRequest {
 		if repo.IgnorePulls {
 			logger.Infoln("trigger: skipping hook. project ignores pull requests")
 			return nil, nil

@@ -104,7 +104,7 @@ func (p *parser) Parse(req *http.Request, secretFunc func(string) string) (*core
 	if err == scm.ErrUnknownEvent {
 		return nil, nil, nil
 	}
-	if err != nil {
+	if err != nil && err != scm.ErrSignatureInvalid {
 		return nil, nil, err
 	}
 
